@@ -18,14 +18,30 @@ function gridSetup(num) {
     }
 }
 
-// initial grid
 gridSetup(16 * 16);
 
 const gridSquares = document.querySelectorAll(".grid-square")
 gridSquares.forEach((grid) => {
     grid.addEventListener('mouseover', (e) => {
-        console.log(e.target.style.backgroundColor);
-            e.target.style.backgroundColor = "rgba(0, 0, 0, 1)";        
-    })
+        if(window.getComputedStyle(e.target).getPropertyValue("opacity") === "1") {
+            e.target.style.backgroundColor = "rgb(0, 0, 0)";
+            e.target.style.opacity = "0.1";
+        } else {
+            if(e.target.style.opacity < "0.9") {
+                console.log(e.target.style.opacity);
+                e.target.style.opacity = parseFloat(e.target.style.opacity) + 0.1;
+            }
+        }
+    });
 });
+
+function clearGrid() {
+    gridSquares.forEach((grid) => {
+        grid.style.backgroundColor = "whitesmoke";
+        grid.style.opacity = "1";
+    })
+}
+
+const clearBtn = document.querySelector(".clear-grid");
+clearBtn.addEventListener("click", clearGrid);
 
